@@ -41,6 +41,14 @@
       "docs.c6t": "参考手册",
       "docs.c6d": "完整事件参考表、安全限制与运行时配额，以及一个端到端的完整模组示例。",
       "docs.cta": "浏览完整文档 ↗",
+      "docs.c1href": "https://rustcraftmc.github.io/docs/zh-cn/lua-modding-api#mod-structure",
+      "docs.c2href": "https://rustcraftmc.github.io/docs/zh-cn/lua-modding-api#client-api",
+      "docs.c3href": "https://rustcraftmc.github.io/docs/zh-cn/lua-modding-api#network-api",
+      "docs.c4href": "https://rustcraftmc.github.io/docs/zh-cn/lua-modding-api#first-person-animation",
+      "docs.c5href": "https://rustcraftmc.github.io/docs/zh-cn/lua-modding-api#storage-api",
+      "docs.c6href": "https://rustcraftmc.github.io/docs/zh-cn/lua-modding-api#event-reference",
+      "docs.ctahref": "https://rustcraftmc.github.io/docs/zh-cn",
+      "footer.docshref": "https://rustcraftmc.github.io/docs/zh-cn",
       "hero.badge": "协议 47 · Minecraft 1.8.9 · Vulkan",
       "hero.sub": "用 Rust 从零复刻的 Minecraft 1.8.9 客户端 —— Vulkan 渲染，可连接真实服务器",
       "hero.cta1": "开始构建",
@@ -125,6 +133,14 @@
       "docs.c6t": "Reference",
       "docs.c6d": "Complete event reference, safety limits & runtime quotas, and an end-to-end example mod.",
       "docs.cta": "Browse Full Docs ↗",
+      "docs.c1href": "https://rustcraftmc.github.io/docs/lua-modding-api#mod-structure",
+      "docs.c2href": "https://rustcraftmc.github.io/docs/lua-modding-api#client-api",
+      "docs.c3href": "https://rustcraftmc.github.io/docs/lua-modding-api#network-api",
+      "docs.c4href": "https://rustcraftmc.github.io/docs/lua-modding-api#first-person-animation",
+      "docs.c5href": "https://rustcraftmc.github.io/docs/lua-modding-api#storage-api",
+      "docs.c6href": "https://rustcraftmc.github.io/docs/lua-modding-api#event-reference",
+      "docs.ctahref": "https://rustcraftmc.github.io/docs",
+      "footer.docshref": "https://rustcraftmc.github.io/docs",
       "hero.badge": "Protocol 47 · Minecraft 1.8.9 · Vulkan",
       "hero.sub": "A Minecraft 1.8.9 client clone written from scratch in Rust — Vulkan-rendered, connects to real servers.",
       "hero.cta1": "Get Started",
@@ -187,6 +203,11 @@
       const key = el.getAttribute("data-i18n");
       const text = dict[lang][key];
       if (text) el.textContent = text;
+    });
+    document.querySelectorAll("[data-i18n-href]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-href");
+      const url = dict[lang][key];
+      if (url) el.setAttribute("href", url);
     });
   }
 
