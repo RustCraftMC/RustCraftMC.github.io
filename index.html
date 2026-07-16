@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RustCraft — A Minecraft 1.8.9 Client in Rust</title>
+  <meta name="description" content="RustCraft — 使用 Rust 编写的 Minecraft 1.8.9 客户端复刻，Vulkan 渲染，协议 47，可连接真实服务器。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%2356a832'/><rect y='10' width='16' height='6' fill='%238a5a2b'/><rect x='3' y='3' width='3' height='3' fill='%237ac74f'/><rect x='10' y='5' width='3' height='3' fill='%237ac74f'/></svg>" />
+</head>
+<body>
+
+  <!-- ===== Nav ===== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#top">
+        <span class="logo-block" aria-hidden="true"></span>
+        <span class="logo-text">RustCraft</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#features" data-i18n="nav.features">特性</a>
+        <a href="#lua" data-i18n="nav.lua">Lua 模组</a>
+        <a href="#docs" data-i18n="nav.docs">API 文档</a>
+        <a href="#stack" data-i18n="nav.stack">技术栈</a>
+        <a href="#build" data-i18n="nav.build">构建运行</a>
+        <a href="https://github.com/RustCraftMC/RustCraft-Public" target="_blank" rel="noopener" class="nav-github">GitHub</a>
+        <button class="lang-toggle" id="langToggle" aria-label="Switch language">EN</button>
+      </div>
+      <button class="nav-burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <header class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-grid"></div>
+      <div class="floating-blocks">
+        <div class="fblock fblock-grass" style="--x:8%;  --d:0s;   --s:1.0"></div>
+        <div class="fblock fblock-dirt"  style="--x:22%; --d:-3s;  --s:0.7"></div>
+        <div class="fblock fblock-stone" style="--x:38%; --d:-6s;  --s:1.2"></div>
+        <div class="fblock fblock-grass" style="--x:55%; --d:-2s;  --s:0.8"></div>
+        <div class="fblock fblock-ore"   style="--x:70%; --d:-5s;  --s:1.0"></div>
+        <div class="fblock fblock-dirt"  style="--x:84%; --d:-1s;  --s:0.9"></div>
+        <div class="fblock fblock-stone" style="--x:93%; --d:-4s;  --s:0.6"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span data-i18n="hero.badge">协议 47 · Minecraft 1.8.9 · Vulkan</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="title-line title-pixel">RustCraft</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">
+        用 Rust 从零复刻的 Minecraft 1.8.9 客户端 —— Vulkan 渲染，可连接真实服务器
+      </p>
+      <div class="hero-actions">
+        <a href="#build" class="btn btn-primary" data-i18n="hero.cta1">开始构建</a>
+        <a href="https://github.com/RustCraftMC/RustCraft-Public" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="hero.cta2">查看源码</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" data-count="173">0</span><span class="stat-label" data-i18n="hero.stat1">Rust 源文件</span></div>
+        <div class="stat"><span class="stat-num" data-count="90000" data-suffix="+">0</span><span class="stat-label" data-i18n="hero.stat2">行代码</span></div>
+        <div class="stat"><span class="stat-num" data-count="47">0</span><span class="stat-label" data-i18n="hero.stat3">协议版本</span></div>
+        <div class="stat"><span class="stat-num" data-count="20">0</span><span class="stat-label" data-i18n="hero.stat4">GLSL 着色器</span></div>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true"><span></span></div>
+  </header>
+
+  <main>
+
+    <!-- ===== Features ===== -->
+    <section class="section" id="features">
+      <div class="container">
+        <h2 class="section-title"><span class="title-accent">//</span> <span data-i18n="features.title">特性</span></h2>
+        <p class="section-desc" data-i18n="features.desc">完整的客户端体验：从网络协议到渲染管线，全部使用 Rust 实现。</p>
+        <div class="feature-grid">
+          <article class="card reveal">
+            <div class="card-icon icon-net" aria-hidden="true"></div>
+            <h3 data-i18n="features.f1t">1.8.9 协议网络</h3>
+            <p data-i18n="features.f1d">完整实现 Minecraft 1.8.9（协议 47）网络栈：数据包、NBT、AES/RSA 加密与 zlib 压缩，可直接连接真实服务器。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon icon-vulkan" aria-hidden="true"></div>
+            <h3 data-i18n="features.f2t">Vulkan 渲染管线</h3>
+            <p data-i18n="features.f2d">基于 ash 的 Vulkan 后端：区块网格并行构建（rayon）、天空盒、实体模型、粒子系统与附魔光效。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon icon-auth" aria-hidden="true"></div>
+            <h3 data-i18n="features.f3t">Microsoft 认证</h3>
+            <p data-i18n="features.f3d">Microsoft / Xbox Live OAuth 登录全流程，带本地账号缓存，支持正版服务器验证。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon icon-lua" aria-hidden="true"></div>
+            <h3 data-i18n="features.f4t">Lua 模组系统</h3>
+            <p data-i18n="features.f4d">内置 mlua（Lua 5.4）脚本桥接，Keystrokes HUD 等模组可通过 Lua 编写与热加载。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon icon-world" aria-hidden="true"></div>
+            <h3 data-i18n="features.f5t">完整世界系统</h3>
+            <p data-i18n="features.f5d">区块 / 方块 / 实体 / 光照全栈实现，含流体与连接玻璃等原版渲染行为对齐。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon icon-ui" aria-hidden="true"></div>
+            <h3 data-i18n="features.f6t">UI · 音频 · 手柄</h3>
+            <p data-i18n="features.f6d">自绘 UI 与字体渲染（fontdue）、rodio 音频回放、gilrs 跨平台手柄输入，资源包与皮肤加载一应俱全。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Lua Modding ===== -->
+    <section class="section section-alt" id="lua">
+      <div class="container">
+        <h2 class="section-title"><span class="title-accent">//</span> <span data-i18n="lua.title">Lua 模组系统</span></h2>
+        <p class="section-desc" data-i18n="lua.desc">内置完整的客户端模组框架：每个模组运行在隔离的 Lua 5.4 沙箱中，通过声明式权限访问事件驱动的 API。</p>
+        <div class="lua-grid">
+          <div class="lua-points reveal">
+            <div class="lua-point">
+              <h4 data-i18n="lua.p1t">🧱 隔离沙箱</h4>
+              <p data-i18n="lua.p1d">每个模组拥有独立的 Lua 5.4 状态机，无文件系统、OS 与原生代码访问；单模组 16 MiB 内存上限、25 万指令数熔断。</p>
+            </div>
+            <div class="lua-point">
+              <h4 data-i18n="lua.p2t">🔑 权限模型</h4>
+              <p data-i18n="lua.p2d">manifest.json 声明所需能力；网络修改、封包发送、协议翻译等敏感权限需在 permissions.json 中显式批准。</p>
+            </div>
+            <div class="lua-point">
+              <h4 data-i18n="lua.p3t">♻️ 热重载</h4>
+              <p data-i18n="lua.p3d">游戏内 <code>/mods reload</code> 即可重载模组，配置项自动生成可视化设置界面，错误隔离不影响其他模组。</p>
+            </div>
+            <div class="lua-point">
+              <h4 data-i18n="lua.p4t">🧩 内置模组</h4>
+              <p data-i18n="lua.p4d">Keystrokes HUD、Old Animations、PVP Tweaks 等官方模组均由该框架实现，可直接参考源码。</p>
+            </div>
+          </div>
+          <div class="terminal reveal">
+            <div class="terminal-bar"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="terminal-title">mods/my_mod/scripts/client.lua</span></div>
+            <pre class="terminal-body"><code><span class="t-comment">-- 定义配置项（自动生成设置界面）</span>
+<span class="t-keyword">local</span> config = game.config.define({
+  { key = <span class="t-string">"enabled"</span>, type = <span class="t-string">"boolean"</span>,
+    label = <span class="t-string">"Enabled"</span>, default = <span class="t-keyword">true</span> }
+})
+
+<span class="t-comment">-- 订阅 HUD 渲染事件并绘制文字</span>
+game.events.on(<span class="t-string">"render.hud.after"</span>, <span class="t-keyword">function</span>(event)
+  <span class="t-keyword">if</span> config.get(<span class="t-string">"enabled"</span>) <span class="t-keyword">then</span>
+    event.draw:text({
+      text = <span class="t-string">"Hello, RustCraft!"</span>,
+      x = <span class="t-num">8</span>, y = <span class="t-num">8</span>, scale = <span class="t-num">1.0</span>,
+      color = { r = <span class="t-num">0.5</span>, g = <span class="t-num">1.0</span>, b = <span class="t-num">0.5</span>, a = <span class="t-num">0.85</span> }
+    })
+  <span class="t-keyword">end</span>
+<span class="t-keyword">end</span>)</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== API Docs Index ===== -->
+    <section class="section" id="docs">
+      <div class="container">
+        <h2 class="section-title"><span class="title-accent">//</span> <span data-i18n="docs.title">Lua API 文档</span></h2>
+        <p class="section-desc" data-i18n="docs.desc">完整的模组开发文档共 22 章，按主题索引如下（外链至官方文档站）。</p>
+        <div class="docs-grid">
+          <a class="docs-card reveal" href="https://rustcraftmc.github.io/docs/lua-modding-api#mod-structure" target="_blank" rel="noopener">
+            <span class="docs-card-tag" data-i18n="docs.c1tag">入门</span>
+            <h3 data-i18n="docs.c1t">快速上手</h3>
+            <p data-i18n="docs.c1d">模组结构、manifest、权限申请、生命周期与热重载、配置项定义、事件系统基础。</p>
+            <span class="docs-card-arrow">→</span>
+          </a>
+          <a class="docs-card reveal" href="https://rustcraftmc.github.io/docs/lua-modding-api#client-api" target="_blank" rel="noopener">
+            <span class="docs-card-tag" data-i18n="docs.c2tag">客户端</span>
+            <h3 data-i18n="docs.c2t">客户端 API</h3>
+            <p data-i18n="docs.c2d">game.client / player / input / ui / world —— 快照读取、FOV 与相机覆盖、输入观察、世界与实体查询。</p>
+            <span class="docs-card-arrow">→</span>
+          </a>
+          <a class="docs-card reveal" href="https://rustcraftmc.github.io/docs/lua-modding-api#network-api" target="_blank" rel="noopener">
+            <span class="docs-card-tag" data-i18n="docs.c3tag">网络</span>
+            <h3 data-i18n="docs.c3t">网络与协议</h3>
+            <p data-i18n="docs.c3d">封包观察 / 修改 / 取消 / 发送，连接事件，以及跨版本协议翻译器（47 ↔ 其他版本）。</p>
+            <span class="docs-card-arrow">→</span>
+          </a>
+          <a class="docs-card reveal" href="https://rustcraftmc.github.io/docs/lua-modding-api#first-person-animation" target="_blank" rel="noopener">
+            <span class="docs-card-tag" data-i18n="docs.c4tag">渲染</span>
+            <h3 data-i18n="docs.c4t">渲染与动画</h3>
+            <p data-i18n="docs.c4d">第一人称手臂 / 物品变换、HUD 绘制（文字 / 矩形 / 线条 / 图片）、渲染事件总线、模组资源。</p>
+            <span class="docs-card-arrow">→</span>
+          </a>
+          <a class="docs-card reveal" href="https://rustcraftmc.github.io/docs/lua-modding-api#storage-api" target="_blank" rel="noopener">
+            <span class="docs-card-tag" data-i18n="docs.c5tag">数据</span>
+            <h3 data-i18n="docs.c5t">数据与诊断</h3>
+            <p data-i18n="docs.c5d">模组级持久化键值存储、日志输出、tick 生命周期事件与调试手段。</p>
+            <span class="docs-card-arrow">→</span>
+          </a>
+          <a class="docs-card reveal" href="https://rustcraftmc.github.io/docs/lua-modding-api#event-reference" target="_blank" rel="noopener">
+            <span class="docs-card-tag" data-i18n="docs.c6tag">参考</span>
+            <h3 data-i18n="docs.c6t">参考手册</h3>
+            <p data-i18n="docs.c6d">完整事件参考表、安全限制与运行时配额，以及一个端到端的完整模组示例。</p>
+            <span class="docs-card-arrow">→</span>
+          </a>
+        </div>
+        <div class="docs-cta reveal">
+          <a class="btn btn-primary" href="https://rustcraftmc.github.io/docs" target="_blank" rel="noopener" data-i18n="docs.cta">浏览完整文档 ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Tech stack ===== -->
+    <section class="section section-alt" id="stack">
+      <div class="container">
+        <h2 class="section-title"><span class="title-accent">//</span> <span data-i18n="stack.title">技术栈</span></h2>
+        <p class="section-desc" data-i18n="stack.desc">无游戏引擎，从窗口到像素全部手写。Rust 2021 edition。</p>
+        <div class="stack-table-wrap reveal">
+          <table class="stack-table">
+            <thead>
+              <tr><th data-i18n="stack.h1">分类</th><th>Crate</th><th data-i18n="stack.h2">用途</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-i18n="stack.r1c1">窗口与输入</td><td><code>winit</code> · <code>gilrs</code></td><td data-i18n="stack.r1c3">窗口、键鼠与手柄事件</td></tr>
+              <tr><td data-i18n="stack.r2c1">图形渲染</td><td><code>ash</code> · <code>gpu-allocator</code></td><td data-i18n="stack.r2c3">Vulkan 绑定与显存分配</td></tr>
+              <tr><td data-i18n="stack.r3c1">着色器</td><td><code>shaderc</code></td><td data-i18n="stack.r3c3">build.rs 编译 GLSL → SPIR-V</td></tr>
+              <tr><td data-i18n="stack.r4c1">数学</td><td><code>nalgebra</code></td><td data-i18n="stack.r4c3">线性代数与变换</td></tr>
+              <tr><td data-i18n="stack.r5c1">网络</td><td><code>reqwest</code> · <code>flate2</code></td><td data-i18n="stack.r5c3">HTTP 与协议压缩</td></tr>
+              <tr><td data-i18n="stack.r6c1">加密</td><td><code>aes</code> · <code>rsa</code> · <code>sha1/sha2</code></td><td data-i18n="stack.r6c3">协议加密与正版验证</td></tr>
+              <tr><td data-i18n="stack.r7c1">脚本</td><td><code>mlua</code></td><td data-i18n="stack.r7c3">Lua 5.4 模组桥接</td></tr>
+              <tr><td data-i18n="stack.r8c1">音频 / 图像 / 字体</td><td><code>rodio</code> · <code>image</code> · <code>fontdue</code></td><td data-i18n="stack.r8c3">声音回放、纹理加载、字体光栅化</td></tr>
+              <tr><td data-i18n="stack.r9c1">并发</td><td><code>rayon</code></td><td data-i18n="stack.r9c3">并行区块网格构建</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Build ===== -->
+    <section class="section" id="build">
+      <div class="container">
+        <h2 class="section-title"><span class="title-accent">//</span> <span data-i18n="build.title">构建与运行</span></h2>
+        <p class="section-desc" data-i18n="build.desc">需要 Rust 工具链与支持 Vulkan 的 GPU 驱动。</p>
+        <div class="build-grid">
+          <div class="terminal reveal">
+            <div class="terminal-bar"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="terminal-title">bash</span></div>
+            <pre class="terminal-body"><code><span class="t-comment"># 克隆仓库</span>
+<span class="t-cmd">git clone</span> https://github.com/RustCraftMC/RustCraft-Public.git
+<span class="t-cmd">cd</span> RustCraft
+
+<span class="t-comment"># 调试构建（opt-level=1）</span>
+<span class="t-cmd">cargo build</span>
+
+<span class="t-comment"># 发布构建（LTO thin · panic=abort · strip）</span>
+<span class="t-cmd">cargo build</span> --release
+
+<span class="t-comment"># 启动游戏</span>
+<span class="t-cmd">cargo run</span>
+
+<span class="t-comment"># 测试 / Lint / 格式</span>
+<span class="t-cmd">cargo test</span> &amp;&amp; <span class="t-cmd">cargo clippy</span> &amp;&amp; <span class="t-cmd">cargo fmt</span> -- --check</code></pre>
+          </div>
+          <div class="build-notes reveal">
+            <div class="note">
+              <h4 data-i18n="build.n1t">📦 资源</h4>
+              <p data-i18n="build.n1d">运行时需要 Minecraft 1.8.9 客户端资源（纹理 / 声音），放置于 <code>assets/</code> 目录。</p>
+            </div>
+            <div class="note">
+              <h4 data-i18n="build.n2t">🔐 认证</h4>
+              <p data-i18n="build.n2d">首次登录走 Microsoft OAuth 浏览器授权，之后令牌缓存在本地。</p>
+            </div>
+            <div class="note">
+              <h4 data-i18n="build.n3t">🎮 参考源码</h4>
+              <p data-i18n="build.n3d">仓库内 <code>minecraft/</code> 目录为反编译的 1.8.9 Java 源码，仅用于行为对照。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Architecture ===== -->
+    <section class="section section-alt" id="arch">
+      <div class="container">
+        <h2 class="section-title"><span class="title-accent">//</span> <span data-i18n="arch.title">项目结构</span></h2>
+        <div class="arch-wrap reveal">
+          <pre class="arch-tree"><code>src/
+├── <span class="dir">main.rs</span>        <span class="cm"># 入口 · 日志初始化 · Vulkan 层兼容处理</span>
+├── <span class="dir">assets/</span>        <span class="cm"># 纹理 / 模型 / 资源包 / 皮肤 / 声音</span>
+├── <span class="dir">auth/</span>          <span class="cm"># Microsoft / Xbox Live OAuth</span>
+├── <span class="dir">client/</span>        <span class="cm"># 游戏逻辑 · 输入 · 背包 · 物理 · 网络会话</span>
+├── <span class="dir">entity/</span>        <span class="cm"># 实体系统</span>
+├── <span class="dir">net/</span>           <span class="cm"># 1.8.9 协议 · 数据包 · NBT · 加密</span>
+├── <span class="dir">render/</span>        <span class="cm"># Vulkan 渲染器 · 管线 · HUD · 天空</span>
+├── <span class="dir">scripting/</span>     <span class="cm"># Lua 模组桥接</span>
+├── <span class="dir">ui/</span>            <span class="cm"># 字体 · 控件 · i18n · 菜单</span>
+└── <span class="dir">world/</span>         <span class="cm"># 区块 · 方块 · 光照 · 网格</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-block" aria-hidden="true"></span>
+        <div>
+          <strong>RustCraft</strong>
+          <p data-i18n="footer.tag">独立技术复刻 · 仅供学习交流</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/RustCraftMC/RustCraft-Public" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://rustcraftmc.github.io/docs" target="_blank" rel="noopener" data-i18n="nav.docs">API 文档</a>
+        <a href="#features" data-i18n="nav.features">特性</a>
+        <a href="#build" data-i18n="nav.build">构建运行</a>
+      </div>
+    </div>
+    <div class="footer-legal container">
+      <p data-i18n="footer.legal">Minecraft 为 Mojang Studios / Microsoft 的商标。本项目与 Mojang 及 Microsoft 无任何关联。</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
