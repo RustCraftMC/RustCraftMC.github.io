@@ -5,13 +5,13 @@
 # Setup (one-time):
 #   Repo → Settings → Pages → Build and deployment → Source: "GitHub Actions"
 #
-# Then every push to main auto-deploys.
+# Then every push to master auto-deploys.
 
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [master, main]
   workflow_dispatch:
 
 permissions:
